@@ -1,0 +1,78 @@
+%% Define the parameters
+Px = -0.1667;
+Py = -.1280;
+Pz = -0.0182;
+sx = -0.7801;
+sy = 0.6246;
+sz = -0.0370;
+nx = 0.5227;
+ny = 0.6831;
+nz = 0.5101;
+ax = 0.3438;
+ay = 0.3786;
+az = -8593;
+R2 = 0.2;
+e = -1;
+
+
+
+
+%Solution
+
+SQ = (-(Px*R2) + e*Py*(Px^2 + Py^2 - R2^2)^0.5)/(Px^2 + Py^2);
+CQ = (Py*R2 + e*Px*Sqrt(Px^2 + Py^2 - R2^2))/(Px^2 + Py^2);
+t1 = atan2( SQ , CQ );
+%Remark :  SQ = Sin(t1)
+          %CQ = Cos(t1)
+
+
+
+%Equation type 4
+Y=-(Px*Cos(t1)) - Py*Sin(t1)
+
+-(R3*Sin(t2)) = Y
+-(R3*Cos(t2)) = -Pz
+
+%Solution
+e = 1  %or e = -1
+R3 = e * Sqrt(Pz^2 + Y^2)
+t2 = atan2(-Y , Pz )
+
+
+
+%Equation type 2
+X=ay*cos(t1) - ax*sin(t1)
+
+Y=-(ax*cos(t1)*cos(t2)) - ay*cos(t2)*sin(t1) + az*sin(t2)
+
+X*cos(t4) + Y*sin(t4) = 0
+
+%Solution
+t4 = atan2(-X,Y )
+ %or t4 = atan2(X,-Y )
+
+
+
+%Equation type 3
+Y=-(cos(t4)*(ax*cos(t1)*cos(t2) + ay*cos(t2)*sin(t1) - az*sin(t2))) - (ay*cos(t1) - ax*sin(t1))*sin(t4)
+
+Y1=-(az*cos(t2)) - ax*cos(t1)*sin(t2) - ay*sin(t1)*sin(t2)
+
+-sin(t5) = Y
+-cos(t5) = Y1
+
+%Solution
+t5 = atan2(-Y , -Y1 )
+
+
+
+%Equation type 3
+Y=-(cos(t4)*(sy*cos(t1) - sx*sin(t1))) + (sx*cos(t1)*cos(t2) + sy*cos(t2)*sin(t1) - sz*sin(t2))*sin(t4)
+
+Y1=-(cos(t4)*(ny*cos(t1) - nx*sin(t1))) + (nx*cos(t1)*cos(t2) + ny*cos(t2)*sin(t1) - nz*sin(t2))*sin(t4)
+
+-sin(t6) = Y
+-cos(t6) = Y1
+
+%Solution
+t6 = atan2(-Y , -Y1 )

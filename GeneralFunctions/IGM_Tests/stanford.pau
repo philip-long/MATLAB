@@ -1,0 +1,112 @@
+(********************************************)
+(** SYMORO+ : SYmbolic MOdelling of RObots **)
+(**========================================**)
+(**      IRCCyN-ECN - 1, rue de la Noe     **)
+(**      B.P.92101                         **)
+(**      44321 Nantes cedex 3, FRANCE      **)
+(**      www.irccyn.ec-nantes.fr           **)
+(********************************************)
+
+
+   Name of file : D:/Mes documents/functions/Matlab Funcs/IGM_Tests/stanford.pau
+
+
+
+
+     Geometric parameters   
+
+
+j     ant   mu    sigma gamma b     alpha d     theta r
+
+
+1     0     1     0     0     0     0     0     t1    0
+
+                                    -Pi
+2     1     1     0     0     0     ---   0     t2    R2
+                                     2
+                                    Pi
+3     2     1     1     0     0     --    0     0     R3
+                                    2
+
+4     3     1     0     0     0     0     0     t4    0
+
+                                    -Pi
+5     4     1     0     0     0     ---   0     t5    0
+                                     2
+                                    Pi
+6     5     1     0     0     0     --    0     t6    0
+                                    2
+
+ The given situation is supposed as follows : 
+
+ 0T6 =    sx   nx   ax   Px
+
+          sy   ny   ay   Py
+
+          sz   nz   az   Pz
+
+
+
+
+Equation type 2
+Py*Cos(t1) - Px*Sin(t1) = R2
+
+Solution
+e = 1  or e = -1
+SQ = (-(Px*R2) + e*Py*Sqrt(Px**2 + Py**2 - R2**2))/(Px**2 + Py**2)
+CQ = (Py*R2 + e*Px*Sqrt(Px**2 + Py**2 - R2**2))/(Px**2 + Py**2)
+t1 = ATAN2( SQ , CQ )
+Remark :  SQ = Sin(t1)
+          CQ = Cos(t1)
+
+
+
+Equation type 4
+Y=-(Px*Cos(t1)) - Py*Sin(t1)
+
+-(R3*Sin(t2)) = Y
+-(R3*Cos(t2)) = -Pz
+
+Solution
+e = 1  or e = -1
+R3 = e * Sqrt(Pz**2 + Y**2)
+t2 = ATAN2(-Y , Pz )
+
+
+
+Equation type 2
+X=ay*Cos(t1) - ax*Sin(t1)
+
+Y=-(ax*Cos(t1)*Cos(t2)) - ay*Cos(t2)*Sin(t1) + az*Sin(t2)
+
+X*Cos(t4) + Y*Sin(t4) = 0
+
+Solution
+t4 = ATAN2(-X,Y )
+ or t4 = ATAN2(X,-Y )
+
+
+
+Equation type 3
+Y=-(Cos(t4)*(ax*Cos(t1)*Cos(t2) + ay*Cos(t2)*Sin(t1) - az*Sin(t2))) - (ay*Cos(t1) - ax*Sin(t1))*Sin(t4)
+
+Y1=-(az*Cos(t2)) - ax*Cos(t1)*Sin(t2) - ay*Sin(t1)*Sin(t2)
+
+-Sin(t5) = Y
+-Cos(t5) = Y1
+
+Solution
+t5 = ATAN2(-Y , -Y1 )
+
+
+
+Equation type 3
+Y=-(Cos(t4)*(sy*Cos(t1) - sx*Sin(t1))) + (sx*Cos(t1)*Cos(t2) + sy*Cos(t2)*Sin(t1) - sz*Sin(t2))*Sin(t4)
+
+Y1=-(Cos(t4)*(ny*Cos(t1) - nx*Sin(t1))) + (nx*Cos(t1)*Cos(t2) + ny*Cos(t2)*Sin(t1) - nz*Sin(t2))*Sin(t4)
+
+-Sin(t6) = Y
+-Cos(t6) = Y1
+
+Solution
+t6 = ATAN2(-Y , -Y1 )
