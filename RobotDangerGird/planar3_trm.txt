@@ -1,0 +1,52 @@
+Direct Geometric model
+
+Geometric parameters
+j       ant     sigma   mu      gamma   b       alpha   d       theta   r       
+1       0       0       1       0       0       0       0       th1     0.0     
+2       1       0       1       0       0       0.0     d2      th2     0.0     
+3       2       0       1       0       0       0       d3      th3     0       
+
+Equations:
+Tramsformation matrix 0 T 1
+T0T111 = cos(th1);
+T0T121 = sin(th1);
+T0T131 = 0;
+T0T112 = -sin(th1);
+T0T122 = cos(th1);
+T0T132 = 0;
+T0T113 = 0;
+T0T123 = 0;
+T0T133 = 1;
+T0T114 = 0;
+T0T124 = 0;
+T0T134 = 0;
+
+Tramsformation matrix 0 T 3
+T0T311 = cos(th1 + th2 + th3);
+T0T321 = sin(th1 + th2 + th3);
+T0T331 = 0;
+T0T312 = -sin(th1 + th2 + th3);
+T0T322 = cos(th1 + th2 + th3);
+T0T332 = 0;
+T0T313 = 0;
+T0T323 = 0;
+T0T333 = 1;
+T0T314 = d2*cos(th1) + d3*cos(th1 + th2);
+T0T324 = d2*sin(th1) + d3*sin(th1 + th2);
+T0T334 = 0;
+
+Tramsformation matrix 0 T 2
+T0T211 = cos(th1 + th2);
+T0T221 = sin(th1 + th2);
+T0T231 = 0;
+T0T212 = -sin(th1 + th2);
+T0T222 = cos(th1 + th2);
+T0T232 = 0;
+T0T213 = 0;
+T0T223 = 0;
+T0T233 = 1;
+T0T214 = d2*cos(th1);
+T0T224 = d2*sin(th1);
+T0T234 = 0;
+
+*=*

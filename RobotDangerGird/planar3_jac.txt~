@@ -1,0 +1,26 @@
+Jacobian matrix for frame 1
+Projection frame 0, intermediate frame 0
+
+Geometric parameters
+j       ant     sigma   mu      gamma   b       alpha   d       theta   r       
+1       0       0       1       0       0       0       0       th1     0.0     
+2       1       0       1       0       0       0.0     d2      th2     0.0     
+3       2       0       1       0       0       0       d3      th3     0       
+
+Equations:
+J1 = 0;
+J2 = 0;
+J3 = 0;
+J4 = 0;
+J5 = 0;
+J6 = 1;
+L11 = 0;
+L21 = 0;
+L31 = 0;
+L12 = 0;
+L22 = 0;
+L32 = 0;
+L13 = 0;
+L23 = 0;
+L33 = 0;
+*=*
