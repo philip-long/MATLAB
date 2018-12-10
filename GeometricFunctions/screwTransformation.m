@@ -38,6 +38,6 @@ Rji=transpose(Rij);
 
 
 T=[Rji -Rji*skew(Pij)
-    zeros(3) Rji]
+    zeros(3) Rji];
 
 Vj=T*Vi;

@@ -1,4 +1,4 @@
-function y=Rot2AngleAxis(T)
+function y=rot2AngleAxis(T)
 %For a given DCM output a representation
 
 
