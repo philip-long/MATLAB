@@ -1,4 +1,4 @@
-function y=Rot2Euler_zyz(T)
+function y=rot2Euler_zyx(T)
 %For a given DCM output a representation
 
 if size(T,1)==4 && size(T,2)==4

@@ -1,14 +1,5 @@
-function y=Rot2Euler_zxz(R)
-% For a given DCM output a representation
-if size(T,1)==4 && size(T,2)==4
-    R = T(1:3, 1:3);   % Extract rotation part of T
-elseif size(T,1)==1 && size(T,2)==9
-    R=reshape(T,3,3);
-elseif size(T,1)==9 && size(T,2)==1
-    R=reshape(T,3,3);
-else
-    R=T;
-end
+function y=rot2Euler_zxz(R)
+
 
 sx=R(1,1);
 sy=R(2,1);
