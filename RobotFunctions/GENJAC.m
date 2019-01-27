@@ -21,20 +21,12 @@ function JE=GENJAC(q,S)
 % all copies or substantial portions of the Software.
 %
 % The Software is provided "as is", without warranty of any kind.
-global alpha d theta r sigma Joints TnE
-
-%If we want the jacobian for a different frame S=frame
-if exist('S','var')
-     n=S;
-else
-     n=Joints;
-end
-%syms rr
+global alpha d theta r sigma TnE
+n=length(alpha);
 T0n=eye(4);
 %J0n=zeros(6,n);
 
 for j=1:n
-    j
     if sigma(j)==1
         rr(j)=q(j)+r(j);
         t(j)=theta(j);
@@ -61,21 +53,10 @@ for k=1:n
         (1-sigma(k))*AJ(:,k)];
 end
 
-if ~exist('S','var')
- T=GENDGM(q);
- T0T3=T{end};
- try
-    P=TnE(1:3,4);
- catch
-    disp 'S is not picked=> you want J @ TCP but TnE is not defined!'
-    disp 'Therefore finding giving Jacobian at last joint'
-    P=[0;0;0];
- end
- L=T0T3(1:3,1:3)*P;
+if(~isempty(TnE))
+ L=T0n(1:3,1:3)*TnE(1:3,4);
  Lhat=skew(L);
-% Jright13=[eye(3) -Lhat; zeros(3) eye(3) ]*J_right
-% J-Jright13
-JE=[eye(3) -Lhat; zeros(3) eye(3) ]*J0n;
+ JE=[eye(3) -Lhat; zeros(3) eye(3) ]*J0n;
 else
     JE=J0n;
 end

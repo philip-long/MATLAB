@@ -1,7 +1,8 @@
-function [ hEllipse,vol  ] = ellipsoidCreate( J,shading)
+function [ hEllipse,vol  ] = ellipsoidCreate( J,shading,face_color)
 
 if(nargin<2)
-    shading=0.2
+    shading=0.2;
+    face_color=[0.3,0.3,0.3];
 end
 
 [s,v]=eig(J([1 2],:)*J([1 2],:)');
@@ -80,7 +81,7 @@ theta = [-0.03:0.01:2*pi];
 %----------------------------------------
  hEllipse = plot(X,Y,lineStyle);
  axis equal;
- fill(X,Y,[0.3 0.3 0.3],'facealpha',shading)
+ fill(X,Y,face_color,'facealpha',shading)
  
 
 end

@@ -29,13 +29,15 @@ Calpha=0.5*((sx+ny+az-1));
 Salpha=0.5*(((nz-ay)^2+(ax-sz)^2+(sy-nx)^2)^0.5);
 alpha=atan2(Salpha,Calpha);
 
-if alpha==0 %No change
-            
+if norm(alpha)<1e-13 %No change
             u=zeros(3,1);
+elseif(Salpha<1e-13)     
+    u=[signCon(nz-ay)*sqrt( (sx-Calpha)/(1-Calpha))
+    signCon(ax-sz)*sqrt( (ny-Calpha)/(1-Calpha))
+    signCon(sy-nx)*sqrt( (az-Calpha)/(1-Calpha))];
             
-        else
-            
-         u= [(R(3,2)-R(2,3))/(2*Salpha)
+elsew            
+        u= [(R(3,2)-R(2,3))/(2*Salpha)
             (R(1,3)-R(3,1))/(2*Salpha)
                 (R(2,1)-R(1,2))/(2*Salpha)];
 end
