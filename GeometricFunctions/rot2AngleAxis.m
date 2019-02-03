@@ -36,7 +36,7 @@ elseif(Salpha<1e-13)
     signCon(ax-sz)*sqrt( (ny-Calpha)/(1-Calpha))
     signCon(sy-nx)*sqrt( (az-Calpha)/(1-Calpha))];
             
-elsew            
+else            
         u= [(R(3,2)-R(2,3))/(2*Salpha)
             (R(1,3)-R(3,1))/(2*Salpha)
                 (R(2,1)-R(1,2))/(2*Salpha)];
