@@ -1,0 +1,15 @@
+<launch>
+        <arg name="gui" default="False" />
+
+        <param name="robot_description" command="$(find xacro)/xacro.py '$(find constrained_manipulation)/urdf/planar_robot_mb.urdf.xacro'" />
+
+
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+	<rosparam param="source_list">["alternative_input/joint_states"]</rosparam>
+        <rosparam param="use_gui">"$(arg gui)"</rosparam>
+	 </node>
+
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find constrained_manipulation)/config/planar_robot.rviz" required="true" />
+</launch>

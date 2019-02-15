@@ -20,7 +20,14 @@
 *.tar
 *.zip
 
+
+# MATLAB RESULTS#
+#################
+*.mat
+*.fig
+*.eps
+
 # Folders #
 ###########
-**/ConstrainedManipulation
+**/Development
 **/CDPRS
