@@ -1,5 +1,6 @@
 # ConstrainedManipulationPlanarExample
-This folder contains all files needed to reproduce the planar robot results. 
+This folder contains all files needed to reproduce the planar robot results using the constrained
+manipulability polytope. Note in order to run this code you will need the [MPT3 library](https://www.mpt3.org/)
 
 ## Matlab_files
 Contains the MATLAB files to generate the manipulability polytopes, analyze the workspace etc.
