@@ -1,6 +1,6 @@
 function [ configs] = checkJointLimits( Q_configs,qmax,qmin)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%checkJointLimits For a given configuration check if it respects joint
+%limits
 
 % step one rearrange the joints such that elbow down configuration is always
 % the first element

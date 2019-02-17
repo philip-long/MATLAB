@@ -1,7 +1,5 @@
-function [ output_args ] = plotObjects( ObjectPositions,dimension )
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
-
+function plotObjects( ObjectPositions,dimension )
+%plotObjects display objects positions in matlab
 hold on
 
 for i=1:size(ObjectPositions,1)

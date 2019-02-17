@@ -6,7 +6,7 @@ load(filename)
 
 %DATA_1=[DATA_1;Xdesired,Ydesired,q_pos,q_vol,q_vold];   
 % DATA_1=[DATA_1;Xdesired,Ydesired,q_pos,q_vol,q_vold,vols_saves]; 
-config=1
+config=1;
 if(config==1)
     DATA=DATA_1;
 else

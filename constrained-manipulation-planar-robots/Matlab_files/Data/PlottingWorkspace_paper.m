@@ -1,16 +1,4 @@
-% clear all,clc,close all
-% global ObjectPositions wkspace_lims_up wkspace_lims_dwn;
-% ObjectPositions=[];
-% ObjectPositions(1,:)=[0.1;0.28;0.0]; % in world frame
-% ObjectPositions(2,:)=[0.8;0.45;0.0]; % in world frame
-% ObjectPositions(3,:)=[0.8;-0.45;0.0]; % in world frame adding a third object
-% wkspace_lims_up=[0.216,-1.332;-0.396,0.432];  %wkspace_lims_up=[-0.54,0.828;0.198,-1.332];
-% wkspace_lims_dwn=[-0.396,-0.432;0.198,1.314]; %wkspace_lims_dwn=[0.198,1.314;-0.54, -0.828];
-% filename='WK_ext';
-% load(filename)
-% 
-% eta_type=1; wp_type=2;wp_star_type=3;c_ext_type=4;
-% elbow_down_config=1; elbow_up_config=2;
+
 %% ELBOW DOWN
 clear all,clc,close all
 global ObjectPositions wkspace_lims_up wkspace_lims_dwn;
@@ -138,7 +126,7 @@ Ydesired_up=DATA(:,2);
 maxx=max(Xdesired_up);
 minx=min(Xdesired_up);
 step_si=Ydesired(10)-Ydesired(9);
-total_len_up=length(minx:step_si:maxx)
+total_len_up=length(minx:step_si:maxx);
 eta_obst_up=DATA(:,6)./DATA(:,5);
 eta_jl_up=DATA(:,7)./DATA(:,5);
 eta_obs_jl_up=DATA(:,8)./DATA(:,5);
@@ -189,7 +177,7 @@ Ydesired_up=DATA(:,2);
 maxx=max(Xdesired_up);
 minx=min(Xdesired_up);
 step_si=Ydesired(10)-Ydesired(9);
-total_len_up=length(minx:step_si:maxx)
+total_len_up=length(minx:step_si:maxx);
 eta_obst_up=DATA(:,6)./DATA(:,5);
 eta_jl_up=DATA(:,7)./DATA(:,5);
 eta_obs_jl_up=DATA(:,8)./DATA(:,5);

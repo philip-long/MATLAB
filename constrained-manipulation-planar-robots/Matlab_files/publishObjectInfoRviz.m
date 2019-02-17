@@ -9,9 +9,9 @@ end
 
 
 
-marker=rosmessage('visualization_msgs/Marker')
+marker=rosmessage('visualization_msgs/Marker');
 marker.Ns='Object';
-marker.Action=marker.ADD
+marker.Action=marker.ADD;
 marker.Type=marker.CUBE;
 marker.Id=i;
 marker.Pose.Position.X = ObjectPosition(1);

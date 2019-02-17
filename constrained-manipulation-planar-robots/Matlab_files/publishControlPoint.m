@@ -1,6 +1,6 @@
 function publishControlPoint( cp_position,i,frame )
 %publishControlPoint publish point in RVIZ
-%   Detailed explanation goes here
+%  
 
 if(nargin==1)
    frame='world'; 
