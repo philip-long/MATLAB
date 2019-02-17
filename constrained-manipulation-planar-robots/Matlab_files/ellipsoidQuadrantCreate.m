@@ -86,8 +86,8 @@ for i=1:length(X)
     end
 end
 
-A=[Xr,Yr]
-B=sortrows(A,2)
+A=[Xr,Yr];
+B=sortrows(A,2);
 hEllipse = plot(B(:,1),B(:,2),lineStyle);
 axis equal
 %fill([0;B(:,1);0],[0;B(:,2);0],[0.3 0.3 0.3],'facealpha',0.2)
