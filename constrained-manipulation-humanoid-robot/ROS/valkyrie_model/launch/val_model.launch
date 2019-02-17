@@ -1,0 +1,18 @@
+<launch>
+
+ 	  <arg name="sleep_time" default="5" />
+	   <param name="robot_description" textfile="$(find valkyrie_model)/model/valkyrie_sim.urdf" />
+
+        <node name="dummy_joint_states" pkg="valkyrie_model" type="dummy_joint_states.py" output="screen">
+		 <param name="reset_time" value="$(arg sleep_time)" />
+	</node>
+
+        <node name="dummy_pelvis_pose" pkg="valkyrie_model" type="dummy_pelvis_pose.py" />
+
+           <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+          <remap from="joint_states" to="dummy_joint_states" />
+        </node>
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="-0.053 0.035 0.09 0 0 0 1 world leftFoot" />
+
+</launch>
