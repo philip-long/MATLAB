@@ -2,12 +2,7 @@ clear all,clc,close all
 
 ResultFiles=dir('*.mat');
 
-%% Firslty find the failures
-%
-%  Conclusion in general the wp* method has more difficulty find a posture
-%  I believe this is due to collision having more of an effect when
-%  embedded in constrained manipulabliity. Its difficult to analyse though
-
+%% find the failures
 
 wpstar_sqp_fail=0;
 wpstar_fail=0;
@@ -44,7 +39,7 @@ legend('Failures','Total Runs')
 %
 %  Conclusion: In general if the wpstar succeeds, the resulting
 %  manipulability is generally better and has slightly more success
-%  in IK queries, though this is not very conclusive.
+%  in IK queries.
 %
 %
 bar_exitflags=[];
