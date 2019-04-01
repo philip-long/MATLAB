@@ -1,4 +1,4 @@
-function [q,qdot,qddot] = JointTrajectory(qinit,qfinal,t)
+function [q,qdot,qddot] = cubicJointTraj(qinit,qfinal,t)
 
 
 rt=(10*((t/(tfinal))^3))-(15*((t/(tfinal))^4))+(6*((t/(tfinal))^5));

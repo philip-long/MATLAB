@@ -1,4 +1,4 @@
-function E=CartesianError(X)
+function E=getCartesianError(X)
 % Finds the error in position and Orientation between 2 trasnformation
 % matrix of vector inputs and outputs the following position and udelta
 %   

@@ -1,6 +1,6 @@
-function Pim=proj_to_Image(X)
+function Pim=project2ImageSpace(X)
 
-% this function projects a 3D in the camera frame to a point in image space
+% this function projects a 3D in the camera frame to a point in image space using a pinhole camera mode
 % 
 % input X is either an array of 3D points or 1 3D point
 %

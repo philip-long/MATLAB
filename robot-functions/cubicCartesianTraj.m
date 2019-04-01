@@ -1,4 +1,4 @@
-function [wTcurrent,twist,acceleration] = CubicCartesianTraj(wTinit,wTfinal,t,tfinal)
+function [wTcurrent,twist,acceleration] = cubicCartesianTraj(wTinit,wTfinal,t,tfinal)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 wTcurrent=eye(4);
