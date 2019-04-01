@@ -41,13 +41,13 @@ plot_robot(T_01,T_02,T_03);
 q=[0;pi-0.1;0];
 qdot=[0.1;0.0;0];
 qddot=[0.1;0.2;0.3];
-A=Inertia_matrix(q);
-H=Centrefugal(q,qdot);
+A=inertiaMatrix(q);
+H=CCG(q,qdot);
 Tau=A*qddot;
 
 q=[0;0.1;0];
-A=Inertia_matrix(q);
-H=Centrefugal(q,qdot);
+A=inertiaMatrix(q);
+H=CCG(q,qdot);
 Tau2=A*qddot;
 %
 %% Posture investigations to see if this makes sense 
@@ -112,7 +112,7 @@ T_01=T01(q);T_02=T02(q);T_03=T03(q);
 T12=inv(T_01)*T_02;
 P12=T12(1:3,4);
 J_01=J01(q);J_02=J02(q);J_03=J03(q);
-A=Inertia_matrix(q);
+A=inertiaMatrix(q);
 
 
 
@@ -139,10 +139,10 @@ Effective_Mass=inv(Effective_Mass_inverse);
 m_inv=[m_inv Effective_Mass];
 J_red=u'*J(1:2);
 m_r=inv((J_red*inv(A(1))*J_red'))
-endif
+end
 
 
-endfor
+end
 plot_robot(T_01,T_02,T_03);
 figure(2)
 plot(1:10,m_inv,"rx","MarkerSize",5.0)
@@ -164,7 +164,7 @@ T_01=T01(q);T_02=T02(q);T_03=T03(q);
 T23=inv(T_02)*T_03;
 P23=T23(1:3,4);
 J_01=J01(q);J_02=J02(q);J_03=J03(q);
-A=Inertia_matrix(q);
+A=inertiaMatrix(q);
 
 Tij=T_02;
 Pij=P23;
@@ -193,10 +193,10 @@ Effective_Mass=inv(Effective_Mass_inverse);
 m_inv=[m_inv Effective_Mass];
 J_red=u'*J(1:2,:);
 m_r=inv((J_red*inv(A(1:2,1:2))*J_red'))
-endif
+end
 
 
-endfor
+end
 plot_robot(T_01,T_02,T_03);
 figure(2)
 plot(1:10,m_inv,"rx","MarkerSize",5.0)

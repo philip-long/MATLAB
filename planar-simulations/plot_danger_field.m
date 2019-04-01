@@ -14,26 +14,30 @@
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 % -*- texinfo -*- 
-% @deftypefn {Function File} {@var{retval} =} J10 (@var{input1}, @var{input2})
+% @deftypefn {Function File} {@var{retval} =} plot_danger_field (@var{input1}, @var{input2})
 %
 % @seealso{}
 % @end deftypefn
 
 % Author: Philip <philip@philip-HP-ProBook-450-G1>
-% Created: 2016-07-25
+% Created: 2016-12-05
 
-function J= J01 (q)
+function [retval] = plot_danger_field (Xdim,Ydim,total_danger_field)
 
-th1=q(1);
-J=zeros(6,1);
+%
+min_value=min(Xdim);
+max_value=max(Xdim);
+resolution=Xdim(1,2)-Xdim(1,1);
+%
 
-J(1) = 0;
-J(2) = 0;
-J(3) = 0;
-J(4) = 0;
-J(5) = 0;
-J(6) = 1;
+colormap('jet');   % set colormap
 
-J=J([1,2,6],:);
+imagesc(Xdim,Ydim,total_danger_field')
+xlim([(min_value-resolution/2),(max_value+resolution/2)])
+ylim([(min_value-resolution/2),(max_value+resolution/2)])
+set(gca,'XTick',(min_value-resolution/2):resolution:(max_value+resolution/2))
+set(gca,'YTick',(min_value-resolution/2):resolution:(max_value+resolution/2))
+colorbar
+hold on
 
-end
+endfunction

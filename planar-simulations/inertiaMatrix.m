@@ -1,28 +1,28 @@
-## Copyright (C) 2016 Philip
-## 
-## This program is free software; you can redistribute it and/or modify it
-## under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 3 of the License, or
-## (at your option) any later version.
-## 
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-## 
-## You should have received a copy of the GNU General Public License
-## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% Copyright (C) 2016 Philip
+% 
+% This program is free software; you can redistribute it and/or modify it
+% under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} Inertia_matrix (@var{input1}, @var{input2})
-##
-## @seealso{}
-## @end deftypefn
+% -*- texinfo -*- 
+% @deftypefn {Function File} {@var{retval} =} Inertia_matrix (@var{input1}, @var{input2})
+%
+% @seealso{}
+% @end deftypefn
 
-## Author: Philip <philip@philip-HP-ProBook-450-G1>
-## Created: 2016-07-25
+% Author: Philip <philip@philip-HP-ProBook-450-G1>
+% Created: 2016-07-25
 
-function A = Inertia_matrix (q)
+function A = inertiaMatrix (q)
 
 global MX3 MY3 MZ3 MX2 MY2 MZ2 MX1 MY1 MZ1
 global XX3 XX2 YY3 YY2 ZZ3 ZZ2 XX1 YY1 ZZ1
@@ -60,9 +60,9 @@ JP112 = AJA113 + XX2;
 JP212 = AJA213 - PAS213 + XY2;
 JP312 = AJ133 - PAS313 + XZ2;
 JP122 = AJA123 - PAS213 + XY2;
-JP222 = AJA223 + M3*d3**2 - 2*PAS223 + YY2;
+JP222 = AJA223 + M3*d3*M3*d3 - 2*PAS223 + YY2;
 JP322 = AJ233 + YZ2;
-JP332 = M3*d3**2 - 2*PAS223 + ZZ2 + ZZ3;
+JP332 = M3*d3*M3*d3 - 2*PAS223 + ZZ2 + ZZ3;
 MSP12 = AS13 + M3*d3 + MX2;
 MSP22 = AS23 + MY2;
 MSP32 = MZ2 + MZ3;
@@ -86,9 +86,9 @@ JP111 = AJA112 + XX1;
 JP211 = AJA212 - PAS212 + XY1;
 JP311 = AJ132 - PAS312 + XZ1;
 JP121 = AJA122 - PAS212 + XY1;
-JP221 = AJA222 + MP2*d2**2 - 2*PAS222 + YY1;
+JP221 = AJA222 + MP2*d2^2 - 2*PAS222 + YY1;
 JP321 = AJ232 + YZ1;
-JP331 = JP332 + MP2*d2**2 - 2*PAS222 + ZZ1;
+JP331 = JP332 + MP2*d2^2 - 2*PAS222 + ZZ1;
 MSP11 = AS12 + MP2*d2 + MX1;
 MSP21 = AS22 + MY1;
 MSP31 = MSP32 + MZ1;
@@ -112,7 +112,7 @@ A(3,3) = IA3 + ZZ3;
   if i~=j
 	  A(i,j)=A(j,i)	;
   end
-  endfor
-  endfor
+  end
+  end
 
-endfunction
+end

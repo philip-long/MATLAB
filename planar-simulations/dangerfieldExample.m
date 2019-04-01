@@ -75,19 +75,19 @@ for cell_i=1:length(Xdim)
        else
         norm_r_diff=norm(r_diff);
         cos_angle=(r_diff'*Velocity_robot_point(1:2))/norm_r_diff*norm(Velocity_robot_point(1:2));
-       endif     
+       end    
        static_danger_field_j=static_danger_field_j+k1/norm_r_diff;   
        velocity_contribution=((k2*norm(Velocity_robot_point(1:2))*gamma*cos_angle))/(norm_r_diff*norm_r_diff);     
        kinematic_danger_field_j=kinematic_danger_field_j+velocity_contribution;                   
        
        if(abs(velocity_contribution)>10.0)       
         velocity_contribution
-       endif
-      endfor             
-    endfor
+       end
+      end             
+    end
     total_danger_field(cell_i,cell_j)=static_danger_field_j+kinematic_danger_field_j;    
-  endfor
-endfor
+  end
+end
 
 
 colormap('jet');   % set colormap

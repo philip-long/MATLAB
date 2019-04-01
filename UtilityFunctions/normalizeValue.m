@@ -14,30 +14,16 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} T10 (@var{input1}, @var{input2})
+## @deftypefn {Function File} {@var{retval} =} normalise_value (@var{input1}, @var{input2})
 ##
 ## @seealso{}
 ## @end deftypefn
 
 ## Author: Philip <philip@philip-HP-ProBook-450-G1>
-## Created: 2016-07-25
+## Created: 2016-12-05
 
-function T = T01 (q)
+function [norm_val] = normalizeValue (val,val_min,val_max)
 
-th1=q(1);
-T0T1=eye(4);
-T0T1(1,1) = cos(th1);
-T0T1(2,1) = sin(th1);
-T0T1(3,1) = 0;
-T0T1(1,2) = -sin(th1);
-T0T1(2,2) = cos(th1);
-T0T1(3,2) = 0;
-T0T1(1,3) = 0;
-T0T1(2,3) = 0;
-T0T1(3,3) = 1;
-T0T1(1,4) = 0;
-T0T1(2,4) = 0;
-T0T1(3,4) = 0;
+norm_val=(val-val_min)/(val_max-val_min);
 
-T=T0T1;
 endfunction

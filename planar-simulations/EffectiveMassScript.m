@@ -36,7 +36,7 @@ J_01=J01(q);J_02=J02(q);J_03=J03(q);
 V=J_03*qdot;
 
 
-A=Inertia_matrix(q);
+A=inertiaMatrix(q);
 
 
 % Effective Mass investigations

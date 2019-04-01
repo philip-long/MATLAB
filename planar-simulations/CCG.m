@@ -1,26 +1,26 @@
-## Copyright (C) 2016 Philip
-## 
-## This program is free software; you can redistribute it and/or modify it
-## under the terms of the GNU General Public License as published by
-## the Free Software Foundation; either version 3 of the License, or
-## (at your option) any later version.
-## 
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-## 
-## You should have received a copy of the GNU General Public License
-## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% Copyright (C) 2016 Philip
+% 
+% This program is free software; you can redistribute it and/or modify it
+% under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} Centrefugal (@var{input1}, @var{input2})
-##
-## @seealso{}
-## @end deftypefn
+% -*- texinfo -*- 
+% @deftypefn {Function File} {@var{retval} =} Centrefugal (@var{input1}, @var{input2})
+%
+% @seealso{}
+% @end deftypefn
 
-## Author: Philip <philip@philip-HP-ProBook-450-G1>
-## Created: 2016-08-02
+% Author: Philip <philip@philip-HP-ProBook-450-G1>
+% Created: 2016-08-02
 
 function [H] = Centrefugal (q,qdot)
 
@@ -43,14 +43,14 @@ C2 = cos(th2);
 S2 = sin(th2);
 C3 = cos(th3);
 S3 = sin(th3);
-DV61 = QP1**2;
+DV61 = QP1^2;
 W32 = QP1 + QP2;
-DV62 = W32**2;
+DV62 = W32^2;
 VSP12 = -DV61*d2;
 VP12 = C2*VSP12;
 VP22 = -S2*VSP12;
 W33 = QP3 + W32;
-DV63 = W33**2;
+DV63 = W33^2;
 VSP13 = -DV62*d3 + VP12;
 VP13 = C3*VSP13 + S3*VP22;
 VP23 = C3*VP22 - S3*VSP13;
@@ -103,4 +103,4 @@ GAM1 = N31;
 GAM2 = N32;
 GAM3 = N33;
 H=[GAM1;GAM2;GAM3];
-endfunction
+end

@@ -15,8 +15,8 @@ for i=1:length(DI)
   DI(i)=minimum_value;  
   elseif(DI(i)>maximum_value)
   DI(i)=maximum_value;
-  endif
-  endfor
+  end
+  end
   
 Position_index=(DI-minimum_value)/(maximum_value-minimum_value);
 plot(cell_distance,Position_index,'LineWidth',5.0)

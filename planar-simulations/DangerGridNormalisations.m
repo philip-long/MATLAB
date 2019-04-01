@@ -14,9 +14,8 @@ for i=1:length(d)
     D=[D 1/max_dis];
     else
      D=[D 1/d(i)];
-   endif
- 
-endfor
+     end 
+end
 
 Dn= ( D-min(D) ) ./  ( max(D)-min(D) ) ;
 
@@ -42,13 +41,13 @@ for i=1:1:20
     Danger=0.0;
     elseif(Danger>max_speed)
     Danger=max_speed;
-   endif
+   end
    
    RDIFF=[RDIFF r_diff];
    DANGER=[DANGER Danger];
    plot(r_diff(1),r_diff(2),'rx',"MarkerSize",5.0,"LineWidth",5.0)
 
-endfor
+end
 
 DANGERp= ( DANGER-min(DANGER) ) ./  (max_speed-min(DANGER) ) ;
 
