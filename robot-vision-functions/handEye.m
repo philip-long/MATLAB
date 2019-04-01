@@ -1,5 +1,6 @@
 % handEye - performs hand/eye calibration
-% 
+%  AUTHOR: lazax.com 
+% http://lazax.com/www.cs.columbia.edu/~laza/html/Stewart/
 %     gHc = handEye(bHg, wHc)
 % 
 %     bHg - pose of gripper relative to the robot base..
