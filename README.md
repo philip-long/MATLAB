@@ -6,15 +6,20 @@
 
 ## Generic Functions
 
-### geometric-functions
- * A set of functions for robot spatial transformations, rotation conversions and simple geometric relations. 
+
+### robot-functions
+A set of convenience functions for robotics, including:
+
+ * Functions for spatial transformations, rotation angular velocity conversions and simple geometric relations between lines and planes. 
+ * General transform and jacobian derivations based on DH parameters.
+ * Simple trajectory generators in configuration and Cartesian space.
+ * Basic visual servoing interaction matrices.  
+ * A general gradient descent IK for serial robots 
+
 
 ### utility-functions
  * A set of convenience functions for MATLAB
- 
-### robot-functions
- * A set of often used functions in MATLAB related to robots, including manipulations for visual servoing, simple trajectory generators, general transform jacobians based on DH parameters, and gradient descent based IGM.
-
+ * 
 ## Robot Specific
 
 ### planar-RRR
