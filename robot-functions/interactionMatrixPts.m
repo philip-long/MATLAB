@@ -1,6 +1,7 @@
-function [ L ] = Lpts(Pim1,Pim2,depth1,depth2)
-%LPTS Summary of this function goes here
-%   Detailed explanation goes here
+function [ L ] = interactionMatrixPts(Pim1,Pim2,depth1,depth2)
+% Compute the interaction matrix for two points
+%   Compute the interaction matrix for two points Pim1 Pim2 of a given 
+%   depth depth1 depth2 based on a pinhole camera model
 
 
 global CameraParameters

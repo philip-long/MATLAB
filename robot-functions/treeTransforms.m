@@ -1,5 +1,6 @@
-%========JACOBIAN FOR GENERAL SERIAL ROBOT==========
-function [T]=GENDGM(q)
+%========Transforms FOR GENERAL tree structured SERIAL ROBOT==========
+function [T]=treeTransforms(q)
+
 % Copyright (c) 2012 Philip Long
 %
 % Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -10,11 +11,10 @@ function [T]=GENDGM(q)
 % all copies or substantial portions of the Software.
 %
 % The Software is provided "as is", without warranty of any kind.
-
-global alpha d theta r sigma Joints
+global alpha d theta r sigma Joints gamma b
 n=Joints;
 %n is number of frames
-%syms rr
+
 T=cell([n 1]);
 T0n=eye(4);
 for j=1:n

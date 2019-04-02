@@ -1,7 +1,7 @@
 function [ L ] = Lseg(u1,v1,u2,v2,Z1,Z2)
-%Lseg Calculate interaction matrix 
+%Lseg Calculate interaction matrix  
 %
-% matrix for a segment
+% matrix for a segment, based on a pinhole camera model
 %
 % [ L ] = InteractionMatrixSeg(u1,v1,u2,v2,Z1,Z2)
 %

@@ -1,14 +1,7 @@
-function JE=GENJAC(q,S)
-%% GENJAC(q,S)
+function JE=generalJacobian(q)
 
-% q is the array of joints, S is the point we want. 
+% q is the array of joints,
 
-% If we want the velocity of the terminal joint just pick S=n (6 generally)
-% If we want the the same velocity but at the end effector frame, S is ommited but the tool transfomration is
-% required as global variable TnE. 
-
-% Finallly if S is less than the last joint for example the 2 joint
-% the jacobian gives the velocity of the robot up to the second joint at the second joint;
 % All jacobians are refered to the world frame
 
 % Copyright (c) 2012 Philip Long
