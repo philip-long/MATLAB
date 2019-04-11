@@ -130,16 +130,16 @@ K=[theta;u];
 Rfinal_ByAngleaxis=angleAxis_2Rot(u,theta);
 
 
-disp ' Comparison of integration methods'
+
 Rfinal_ByRotations
 Rfinal_ByAngleaxis
 Rfinal_ByQuaternions
 Rfinal_ByRPY
-Rfinal_ByEuler
-pause()
 
+
+rot_u_alpha=rot2AngleAxis(Rinit*Rfinal_ByAngleaxis');
 %% An example how to obtain a correcting angular velocity term from rotation matrices
-
+% This is quite useful for controllers
 clear all,clc
 % Three random angles and axes
 angles=randRange(-pi,pi,1);
@@ -158,37 +158,27 @@ wRwe=wR1*wR2'; % Error between the in world frame
 rot_u_alpha=rot2AngleAxis(wRwe);
 angular_velocity=rot_u_alpha(1)*rot_u_alpha(2:4);
 
-Euler_dot=angVelocity2EulerZXZDot(angular_velocity,wR1);
-RPY_dot=angVelocity2EulerZYXDot(angular_velocity,wR1);
+
+Euler_dot=angVelocity2EulerZYXDot(angular_velocity,wR1);
 u_alpha_dot=angVelocity2AngleAxisdot(angular_velocity,wR1);
 quat_dot=angVelocity2Quaterniondot(angular_velocity,wR1);
 
 
-% Alternatively by RPY axis
+% Alternatively by Euler axis
 
-rpy2=rot2Euler_zyx(wR2);
-rpy1=rot2Euler_zyx(wR1);
-rpy1-rpy2;
-phi1=rpy1(1); theta1=rpy1(2); psi1=rpy1(3);
+e2=rot2Euler_zyx(wR2);
+e1=rot2Euler_zyx(wR1);
+e1-e2;
+phi1=e1(1); theta1=e1(2); psi1=e1(3);
+
+
 
 Cinv=[0 -sin(phi1) cos(phi1)*cos(theta1)
       0  cos(phi1) sin(phi1)*cos(theta1) 
       1   0             -sin(theta1)];
+angular_velocity_by_eulers=Cinv*(e1-e2);
 
-angular_velocity_by_rpy=Cinv*(rpy1-rpy2);
 
-
-% Alternatively by Euler angles
-e2=rot2Euler_zxz(wR2);
-e1=rot2Euler_zxz(wR1);
-e1-e2;
-phi1=e1(1); theta1=e1(2); psi1=e1(3);
-
-Cinv=[0 cos(phi1) sin(phi1)*sin(theta1)
-      0  sin(phi1) -cos(phi1)*sin(theta1) 
-      1   0             cos(theta1)];
-  
-angular_velocity_by_euler=Cinv*(e1-e2);
 
 % Alternatively by quaternion
 Q2=rot2Quat_wxyz(wR2);
@@ -203,11 +193,8 @@ angular_velocity_by_quaternions=4*transpose(C)*(Q1-Q2);
 
 
 fprintf('Error using quaternions = %d \n', norm(angular_velocity_by_quaternions-angular_velocity)); 
-fprintf('Error using RPY (ZYX) angle = %d \n', norm(angular_velocity_by_rpy-angular_velocity));
-fprintf('Error using Euler (ZXZ) angle = %d \n \n', norm(angular_velocity_by_euler-angular_velocity));
-
+fprintf('Error using euler angle = %d \n', norm(angular_velocity_by_eulers-angular_velocity));
 fprintf('Error quaternion dot reconstruction = %d \n', norm(quat_dot-(Q1-Q2)));
-fprintf('Error RPY dot reconstruction = %d \n', norm(RPY_dot- (rpy1-rpy2)));
-fprintf('Error Euler dot reconstruction = %d \n', norm(Euler_dot- (e1-e2)));
+fprintf('Error euler dot reconstruction = %d \n', norm(Euler_dot- (e1-e2)));
 
 

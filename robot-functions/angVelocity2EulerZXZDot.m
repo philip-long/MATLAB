@@ -7,7 +7,7 @@ if Test>0.1
     disp 'Not a rotation matrix'
 end
 
-Y=zxz_euler2Rot(Rinit);
+Y=zxz_euler2Rot(R);
 phi1=Y(1);
 theta1=Y(2);
 psi1=Y(3);

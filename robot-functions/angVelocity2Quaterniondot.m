@@ -2,7 +2,7 @@ function [ Repdot ] = angVelocity2Quaterniondot(omega,R)
 % angularVelocity2Quaterniondot Converts angular Velocity to change in quaternion 
 
 
-Test=norm((R*R')-eye(3))
+Test=norm((R*R')-eye(3));
 if Test>0.1
     disp 'Not a rotation matrix'
 end
