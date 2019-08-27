@@ -1,5 +1,6 @@
 % http://www.orocos.org/node/829
 % I have checked the hessian symbolically and this is working!! :0
+% Need to tidy this code up and functionalize it
 clear all,clc,close all
 load('Hessian_mats')
 addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
@@ -34,7 +35,9 @@ for q3=0:step:pi
            % if(i<j)
            twist_j=J(:,j);
            d_twist_dqi{j}(:,i)=[skew(J(4:6,i)) zeros(3)
-                          zeros(3) -skew(J(4:6,i))] * twist_j;
+                          zeros(3) -skew(J(4:6,i))] * twist_j
+           d_twist_dqi{j}(:,i)=[skew(J(4:6,i)) zeros(3)
+                          zeros(3) skew(J(4:6,j))] * J(:,i)
            if(i<j)
                d_twist_dqi{j}(1:3,i)=[skew(J(4:6,i)) zeros(3)]*twist_j;
                d_twist_dqi{j}(4:6,i)=zeros(3,1);
@@ -52,13 +55,13 @@ for q3=0:step:pi
      % [ dx/dq1dq1 dx/dq1dq2 dx/dq1dq3 ... dx/dq1dqn] 
      % [ dx/dq2dq1 dx/dq2dq2 dx/dq2dq3 ... dx/dqdqn]
     numerical_gradient=(J-Jlast)/step;
-    
+    % d_twist_dqi{joint}
     rows=randi(6);
     cols=randi(7);
     numerical_gradient(rows,cols)
     Htensor(rows,cols,joint)
     Htensor(rows,joint,cols)
-       
+       pause()
      if(norm(numerical_gradient(rows,cols) - Htensor(rows,joint,cols))>0.01)
                       q1=qpos(1);     q2=qpos(2);     q3=qpos(3);
        q4=qpos(4);    q5=qpos(5);     q6=qpos(6);     q7=qpos(7);

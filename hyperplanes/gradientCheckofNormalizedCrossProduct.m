@@ -1,46 +1,4 @@
-% gradient of cross product test
-
-cv1v2=zeros(3,1);
-v1=zeros(3,1);
-v2=zeros(3,1);
-step=0.001;
-Eg=[]
-Ev1=[]
-Ev2=[]
-for q=-2:step:2
-
-cv1v2_last=cv1v2;
-v1_last=v1;
-v2_last=v2;
-
-v1=[q^2 + 6*q;-6*q^2 + 12*q; 1*q];
-dv1=[2*q+6;-12*q+12;1];
-v2=[q^3 + 2*q;-2*q; -8*q];
-dv2=[3*q^2+2;-2;-8];
-
-dc=-skew(v2)*dv1 + skew(v1)*dv2
-dc2=cross(dv1,v2)+cross(v1,dv2)
-
-
-cv1v2=cross(v1,v2);
-
-grad_cross=(cv1v2-cv1v2_last)/step;
-grad_v1=(v1-v1_last)/step;
-grad_v2=(v2-v2_last)/step;
-
-
-grad_cross-dc
-Eg=[Eg;norm(grad_cross-dc)];
-Ev1=[Ev1;grad_v1-dv1];
-Ev2=[Ev2;grad_v2-dv2];
-
-end
-
-plot(Eg(2:end),'r');
-hold on
-plot(Ev1(4:end),'b');
-plot(Ev2(4:end),'g');
-%% Now try the normalized vectors
+%% Gradient Check of normalized cross product
 clear all,clc
 
 cross_product=zeros(3,1);
@@ -50,7 +8,9 @@ n=zeros(3,1);
 
 q=-2;
 step=0.001;
-for q=-2:step:2
+NUM=[];
+ANALYTIC=[];
+for q=--rand(1)*4:step:rand(1)*4
 
 v1=[q^4 + 6*q;-6*q^2 + 5*q; 1*q^2];
 dv1=[(4*q^3)+6;-12*q+5;2*q];
@@ -105,13 +65,17 @@ dudq=-skew(v2)*dv1 + skew(v1)*dv2;
 dvdq=(dudq'*u)/((u'*u)^0.5);
 
 n=u/v;
-dndq= (dudq*v - u*dvdq )/ v^2
-numerial_grad_n=(n-n_last)/step
-pause()
+dndq= (dudq*v - u*dvdq )/ v^2;
+numerial_grad_n=(n-n_last)/step;
 
 
 
-
-
+NUM=[NUM;numerial_grad_n'];
+ANALYTIC=[ANALYTIC;dndq'];
 end
 
+for i=1:3
+plot(NUM(2:end,i),'ro');
+hold on
+plot(ANALYTIC(2:end,i),'b');
+end

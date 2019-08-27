@@ -1,11 +1,14 @@
-% gradient of cross product test
+% Gradient of a sigmoid function check
 clear all, clc,close all;
+clear all,clc,close all
+addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
+
 sig=0
 step=0.01;
 D=[];
 N=[];
 S=[]
-a=100
+a=100;
 for z=-5:0.01:5
     siglast=sig;
     sig=sigmoid(z,a);
@@ -16,7 +19,7 @@ for z=-5:0.01:5
     S=[S;sig]
 end
 z=-5:0.01:5;
-plot(z(2:end),N(2:end),'r')
+plot(z(2:end),N(2:end),'r');
 hold on
-plot(z(2:end),D(2:end),'b')
+plot(z(2:end),D(2:end),'b');
 %plot(z(2:end),S(2:end),'g')
