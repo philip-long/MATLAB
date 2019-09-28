@@ -1,4 +1,5 @@
-% Gradient check of continuous hyperplane function
+
+%% Now try the normalized vectors
 clear all,clc,close all
 
 cross_product=zeros(3,1);
@@ -8,13 +9,12 @@ n=zeros(3,1);
 nt_vk=zeros(3,1);
 sig_nt_vk=zeros(3,1);
 h=zeros(3,1);
-
+q=-2;
 step=0.001;
-NUM=[];
-ANALYTIC=[];
+
 deltaq=rand(1)*2;
 
-for q=-rand(1)*4:step:rand(1)*4
+for q=-2:step:2
 
 v1=[q^4 + 6*q;-6*q^2 + 5*q; 1*q^2];
 dv1=[(4*q^3)+6;-12*q+5;2*q];
@@ -59,13 +59,9 @@ h=sigmoid(nt_vk,200)*deltaq*nt_vk;
 % Gradient of H CHECKED
 dhdq=(numerial_grad_sig_nt_vk*deltaq*nt_vk) + sigmoid(nt_vk,200)*deltaq*dntvk_dq
 numerical_gradient_h=(h-h_last)/step
-NUM=[NUM;numerical_gradient_h];
-ANALYTIC=[ANALYTIC;dhdq];
+if(dsig_nt_vk_dq>0.001)
+pause()
 end
 
-plot(NUM(10:end),'ro');
-hold on
-plot(ANALYTIC(10:end),'b');
-
-
+end
 
