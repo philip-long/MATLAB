@@ -13,15 +13,32 @@ PB_desired=[0.1 ; 0.1 ;0.1 ;0.4;0.3;0.2];
 desired_twist=Polyhedron(PA_desired,PB_desired);
 
 active_joint=1:4; % Only considering 4 joint for illustrative case
-sigmoid_factor=200;
+sigmoid_slope=200;
+
 %%
 G=[]
 qpos=randRange(-pi,pi,7);
 joint=randi(4);
 
-for q3=0:0.01:pi
+
+n=zeros(6,3);
+ hplus=zeros(6,1);
+step=0.01
+Gamma_i=0.0;
+
+
+for q3=0:step:pi
     
-    qpos(3)=q3;
+    
+    % Checking the numerical gradient  
+   
+    n_last=n;
+    hplus_last=hplus;
+    Gamma_last=Gamma_i;
+    %
+    
+    
+    qpos(joint)=q3;
     T=T70(qpos);
     J=J70(qpos);
     S=screwTransform(T(1:3,1:3)*[0.55;0.0;0.0]);
@@ -83,21 +100,33 @@ for q3=0:0.01:pi
             ntvk=vk'*n(i,:)';
             d_ntvk_dq=(d_n_dq(i,:)*vk) +n(i,:)*d_vk_dq;
             
-            dsig_nt_vk_dq=sigmoidGradient(ntvk,200)*d_ntvk_dq;
+            dsig_nt_vk_dq=sigmoidGradient(ntvk,sigmoid_slope)*d_ntvk_dq;
             
-            d_hplus_dq(i)=d_hplus_dq(i)+(sigmoidGradient(ntvk,200)*d_ntvk_dq*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,sigmoid_factor)*deltaq(Nnot(i,j))*d_ntvk_dq;
-            d_hminus_dq(i)=d_hminus_dq(i)+(sigmoidGradient(-ntvk,200)*d_ntvk_dq*deltaq(Nnot(i,j))*ntvk) + sigmoid(-ntvk,sigmoid_factor)*deltaq(Nnot(i,j))*d_ntvk_dq;
+            d_hplus_dq(i)=d_hplus_dq(i)+(sigmoidGradient(ntvk,sigmoid_slope)*d_ntvk_dq*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq;
+            d_hminus_dq(i)=d_hminus_dq(i)+(sigmoidGradient(-ntvk,sigmoid_slope)*d_ntvk_dq*deltaq(Nnot(i,j))*ntvk) + sigmoid(-ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq;
 
-            hplus(i)=hplus(i)+sigmoid(ntvk*sigmoid_factor)* deltaq(Nnot(i,j))*ntvk;
-            hminus(i)=hminus(i)+sigmoid(-ntvk*sigmoid_factor)* deltaq(Nnot(i,j))*ntvk;
+            hplus(i)=hplus(i)+sigmoid(ntvk*sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
+            hminus(i)=hminus(i)+sigmoid(-ntvk*sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
         end
         
     end
     
     % Write code to check the gradients of each individual component
+    % Gradient of n CHECKED
+    numerial_grad_n=(n-n_last)/step
+    d_n_dq
+    % Gradient of hplus CHECKED
+    numerial_grad_hplus=(hplus-hplus_last)/step
+    d_hplus_dq
+
     
-   
+    
     Gamma_i=hplus(3)+ n(3,:)*JE*qdot_min - (n(3,:) * desired_twist.V(1,:)');
+    
+    % Gradient of Gamma CHECKED
+    numerical_grad_gamma=(Gamma_i-Gamma_last)/step
+    d_gamma_dq_i=d_hplus_dq(3) + (d_n_dq(3,:)*JE*qdot_min)  + (n(3,:)*HE{joint}(1:3,:)*qdot_min) - (d_n_dq(3,:)*desired_twist.V(1,:)')
+    pause()
     G=[G;Gamma_i];
 end
 
