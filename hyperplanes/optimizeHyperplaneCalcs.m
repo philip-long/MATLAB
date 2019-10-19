@@ -21,9 +21,9 @@ qpos=randRange(-pi,pi,7);
 joint=randi(4);
 
 step=0.01
-Gamma_i=0.0;
 
-Gamma_all=zeros(6,1);
+
+Gamma_plus=zeros(3,1);
 
 qdot_max=ones(length(active_joint),1)*qdot_arm_max;
 qdot_min=ones(length(active_joint),1)*qdot_arm_min;
@@ -33,17 +33,19 @@ A=[eye(length(active_joint)) ;-eye(length(active_joint))];
 B=[ones(length(active_joint),1)*qdot_arm_max ;ones(length(active_joint),1)*-qdot_arm_min];
 Q_arm=Polyhedron(A,B);Q_arm.computeVRep;
 
+Gamma_p_gradient=cell(length(active_joint),1);
+Gamma_m_gradient=cell(length(active_joint),1);
+
 for q3=0:step:pi
     
     
     % Checking the numerical gradient
-    Gamma_last=Gamma_i;
-    Gamma_all_last=Gamma_all;
+    Gamma_last=Gamma_plus;
     %
     
     qpos(joint)=q3;
     T=T70(qpos);
-    J=J70(qpos);
+    J=J70(qpos); 
     S=screwTransform(T(1:3,1:3)*[0.55;0.0;0.0]);
     JE=S*J;
     
@@ -55,17 +57,27 @@ for q3=0:step:pi
     %
     HE=getHessian(JE(:,active_joint));
     JE=JE(1:3,active_joint);
-    [n,hp,hm,n_grad,hp_grad,hm_grad]=getHyperplanes(JE,HE,joint,deltaq,active_joint);
+    [n,hp,hm,n_grad,hp_grad,hm_grad]=getHyperplanes(JE,HE,deltaq,active_joint);
     %
-    
-    % Gradient of Gamma all CHECKED
-    Gamma_plus=hp + n*JE*qdot_min -  (n * desired_twist.V(1,:)')
-    Gamma_p_gradient=hp_grad + (n_grad*JE*qdot_min)  + (n*HE{joint}(1:3,:)*qdot_min) - (n_grad*desired_twist.V(1,:)')
-    
-    Gamma_minus=hm + n*JE*qdot_min+(n * desired_twist.V(1,:)')
-    Gamma_m_gradient=hm_grad + (n_grad*JE*qdot_min)  + (n*HE{joint}(1:3,:)*qdot_min) + (n_grad*desired_twist.V(1,:)')
-    
-    
+  
 
+    % Gamma_plus is capacity margin where positive means vertex is inside
+    % polytope and negative outside. Gamma_plus has as many rows as
+    % hyperplanes in cartesian velocity polytope and as many columns as 
+    % vertices in desired set. One element of cell Gamma_p_gradient{joint} has the 
+    % same dimension as Gamma_plus indicating the change of Gamma_plus
+    % w.r.t to that chosen joint
+   
+    
+    for vertex=1:size(desired_twist.V,1)
+    Gamma_plus(:,vertex)=hp + n*JE*qdot_min -  (n * desired_twist.V(vertex,:)');
+    Gamma_p_gradient{joint}(:,vertex)=hp_grad{joint} + (n_grad{joint} *JE*qdot_min)  + (n*HE{joint}(1:3,:)*qdot_min) - (n_grad{joint} *desired_twist.V(vertex,:)');    
+    Gamma_minus(:,vertex)=hm + n*JE*qdot_min+(n * desired_twist.V(vertex,:)');
+    Gamma_m_gradient{joint}(:,vertex)=hm_grad{joint}  + (n_grad{joint} *JE*qdot_min)  + (n*HE{joint}(1:3,:)*qdot_min) + (n_grad{joint} *desired_twist.V(vertex,:)');
+    end
+    
+    
+    numerical_grad_gamma=(Gamma_plus-Gamma_last)/step
+     pause()
 end
 

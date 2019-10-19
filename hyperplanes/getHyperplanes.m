@@ -1,4 +1,4 @@
-function [n,hplus,hminus,d_n_dq,d_hplus_dq,d_hminus_dq] = getHyperplanes(JE,HE,joint,deltaq,active_joint)
+function [n,hplus,hminus,d_n_dq,d_hplus_dq,d_hminus_dq] = getHyperplanes(JE,HE,deltaq,active_joint)
 %getHyperplanes Gets the hyperplanes parameters
 %   gets the parameters that can be used to construct the cartesian
 %   velocitity polytopes using hyperplane method as well as their gradients, 
@@ -16,11 +16,15 @@ m=size(JE,1); % Number of degrees of freedom
 % define n, a unit vector perpendicular to a hyperplane that includes all these unit wrdofches.
 
 n=zeros(size(N,1),m);
-d_n_dq=zeros(size(N,1),3); % Gradient of n
 hplus=zeros(size(N,1),1);
-d_hplus_dq=zeros(size(N,1),1);
 hminus=zeros(size(N,1),1);
-d_hminus_dq=zeros(size(N,1),1);
+
+d_n_dq=cell(length(active_joint),1);
+d_hplus_dq=cell(length(active_joint),1);
+d_hminus_dq=cell(length(active_joint),1);
+
+
+
 
 % the steepness of the sigmoid function
 sigmoid_slope=200;
@@ -33,30 +37,36 @@ sigmoid_slope=200;
 
 
 
-
-
 for i = 1:size(N,1)
     v1=JE(:,N(i,1));
     v2=JE(:,N(i,2));
-    d_v1_dq=HE{joint}(1:3,N(i,1)); % Gradient with respect to one joint
-    d_v2_dq=HE{joint}(1:3,N(i,2));
-    
     n(i,:)=cross(v1,v2)/norm(cross(v1,v2)); % This is ok so far
-    d_n_dq(i,:)= getGradientn(v1,v2,d_v1_dq,d_v2_dq);  % Gradient with respect to one joint
-       
+    
+    for joint=active_joint
+    d_v1_dq{joint}=HE{joint}(1:3,N(i,1)); % Gradient with respect to one joint
+    d_v2_dq{joint}=HE{joint}(1:3,N(i,2));       
+    d_n_dq{joint}(i,:)= getGradientn(v1,v2,d_v1_dq{joint},d_v2_dq{joint});  % Gradient with respect to one joint
+    d_hplus_dq{joint}(i,1)=0.0;
+    d_hminus_dq{joint}(i,1)=0.0;
+    end
+    
+    
     hplus(i)=0.0;
-    d_hplus_dq(i)=0.0;
+  
     hminus(i)=0.0;
-    d_hminus_dq(i)=0.0;
+    
     
     for j=1:(n_joints-(m-1))
         vk=JE(:,Nnot(i,j));
-        d_vk_dq=HE{joint}(1:3,Nnot(i,j));
+       
         ntvk=vk'*n(i,:)';
-        d_ntvk_dq=(d_n_dq(i,:)*vk) +n(i,:)*d_vk_dq;
-
-        d_hplus_dq(i)=d_hplus_dq(i)+(sigmoidGradient(ntvk,sigmoid_slope)*d_ntvk_dq*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq;
-        d_hminus_dq(i)=d_hminus_dq(i)+(sigmoidGradient(-ntvk,sigmoid_slope)*d_ntvk_dq*deltaq(Nnot(i,j))*ntvk) + sigmoid(-ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq;
+        
+        for joint=active_joint
+        d_vk_dq{joint}=HE{joint}(1:3,Nnot(i,j));
+        d_ntvk_dq{joint}=(d_n_dq{joint}(i,:)*vk) +n(i,:)*d_vk_dq{joint};
+        d_hplus_dq{joint}(i)=d_hplus_dq{joint}(i)+(sigmoidGradient(ntvk,sigmoid_slope)*d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq{joint};
+        d_hminus_dq{joint}(i)=d_hminus_dq{joint}(i)+(sigmoidGradient(-ntvk,sigmoid_slope)*d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(-ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq{joint};
+        end
         
         hplus(i)=hplus(i)+sigmoid(ntvk*sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
         hminus(i)=hminus(i)+sigmoid(-ntvk*sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
