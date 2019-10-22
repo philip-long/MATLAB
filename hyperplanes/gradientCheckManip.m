@@ -65,8 +65,9 @@ for q3=0:step:pi
     % polytope and negative outside. Gamma_plus has as many rows as
     % hyperplanes in cartesian velocity polytope and as many columns as 
     % vertices in desired set. One element of cell Gamma_p_gradient{joint} has the 
-    % same dimension as Gamma_plus indicating the 
-    
+    % same dimension as Gamma_plus indicating the change of Gamma_plus
+    % w.r.t to that chosen joint
+   
     
     for vertex=1:size(desired_twist.V,1)
     Gamma_plus(:,vertex)=hp + n*JE*qdot_min -  (n * desired_twist.V(vertex,:)');
@@ -76,7 +77,9 @@ for q3=0:step:pi
     end
     
     
-    numerical_grad_gamma=(Gamma_plus-Gamma_last)/step
+    numerical_grad_gamma=(Gamma_plus-Gamma_last)/step;
+    numerical_grad_gamma_sum=(sum(sum(Gamma_plus))-sum(sum(Gamma_last)))/step
+    sum(sum(Gamma_p_gradient{joint}))
      pause()
 end
 
