@@ -3,10 +3,14 @@ function [n,hplus,hminus,d_n_dq,d_hplus_dq,d_hminus_dq] = getHyperplanes(JE,HE,d
 %   gets the parameters that can be used to construct the cartesian
 %   velocitity polytopes using hyperplane method as well as their gradients, 
 
-
 % Jacobian is a d x n matrix i.e. in this case 3 times 4; d=3 n=4
 n_joints=size(JE,2);  % linearly independent directions
 m=size(JE,1); % Number of degrees of freedom
+
+if(nargin<4)
+    active_joint=1:n_joints;
+end
+
 
 % Return combination of selected joints and selected joints
 
@@ -27,7 +31,7 @@ d_hminus_dq=cell(length(active_joint),1);
 
 
 % the steepness of the sigmoid function
-sigmoid_slope=200;
+sigmoid_slope=2;
 
 
 % We start from an initial hyperplane that includes the origin and whose normal is n. The unit

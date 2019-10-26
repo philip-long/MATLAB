@@ -7,10 +7,11 @@ norm_single_vector=0;
 n=zeros(3,1);
 
 q=-2;
-step=0.001;
+step=0.0001;
 NUM=[];
 ANALYTIC=[];
-for q=--rand(1)*4:step:rand(1)*4
+E=[]
+for q=-rand(1)*4:step:rand(1)*4
     
     v1=[q^4 + 6*q;-6*q^2 + 5*q; 1*q^2];
     dv1=[(4*q^3)+6;-12*q+5;2*q];
@@ -72,8 +73,11 @@ for q=--rand(1)*4:step:rand(1)*4
     
     NUM=[NUM;numerial_grad_n'];
     ANALYTIC=[ANALYTIC;dndq'];
+    
+    E=[E;norm(numerial_grad_n-dndq)];
 end
-
+plot(E(2:end))
+pause()
 for i=1:3
     plot(NUM(2:end,i),'ro');
     hold on
@@ -102,7 +106,7 @@ joint;
 E=[];
 NUM=[];
 ANALYTIC=[];
-step=0.01;
+step=0.0001;
 
 for qjoint=0:step:pi
     
@@ -167,7 +171,7 @@ for qjoint=0:step:pi
     dvdq=(dudq'*u)/((u'*u)^0.5);
     
     n=u/v;
-    dndq= (dudq*v - u*dvdq )/ v^2
+    dndq= (dudq*v - u*dvdq )/ v^2;
     numerial_grad_n=(n-n_last)/step;
     
     dndq=getGradientn(v1,v2,dv1,dv2);
@@ -175,7 +179,13 @@ for qjoint=0:step:pi
     
     NUM=[NUM;numerial_grad_n'];
     ANALYTIC=[ANALYTIC;dndq'];
+
+    E=[E;norm(numerial_grad_n-dndq)];
+
 end
+plot(E(2:end))
+pause()
+
 
 for i=1:3
     plot(NUM(2:end,i),'ro');

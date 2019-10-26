@@ -23,7 +23,7 @@ S=screwTransform(T(1:3,1:3)*[0.55;0.0;0.0]);
 JE=S*J;
 joint
 E=[];
-step=0.01;
+step=0.0001;
 for q3=0:step:pi
     Jlast=JE;
     

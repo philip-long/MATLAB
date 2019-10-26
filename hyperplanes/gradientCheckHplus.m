@@ -10,10 +10,10 @@ nt_vk=zeros(3,1);
 sig_nt_vk=zeros(3,1);
 h=zeros(3,1);
 q=-2;
-step=0.001;
+step=0.0001;
 
 deltaq=rand(1)*2;
-
+E=[]
 for q=-2:step:2
 
 v1=[q^4 + 6*q;-6*q^2 + 5*q; 1*q^2];
@@ -51,17 +51,17 @@ numerial_grad_ntvk=(n'*vk-nt_vk_last)/step;
 
 
 % GRADIENT OF SIGMOID(nt*vk) CHECKED
-sig_nt_vk=sigmoid(nt_vk,200)
+sig_nt_vk=sigmoid(nt_vk,200);
 dsig_nt_vk_dq=sigmoidGradient(nt_vk,200)*dntvk_dq;
 numerial_grad_sig_nt_vk=(sig_nt_vk-sig_nt_vk_last)/step;
 
 h=sigmoid(nt_vk,200)*deltaq*nt_vk;
 % Gradient of H CHECKED
-dhdq=(numerial_grad_sig_nt_vk*deltaq*nt_vk) + sigmoid(nt_vk,200)*deltaq*dntvk_dq
-numerical_gradient_h=(h-h_last)/step
-if(dsig_nt_vk_dq>0.001)
-pause()
+dhdq=(numerial_grad_sig_nt_vk*deltaq*nt_vk) + sigmoid(nt_vk,200)*deltaq*dntvk_dq;
+numerical_gradient_h=(h-h_last)/step;
+% if(dsig_nt_vk_dq>0.001)
+% pause()
+% end
+    E=[E;norm(numerical_gradient_h-dhdq)];
 end
-
-end
-
+plot(E(2:end))
