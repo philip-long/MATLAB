@@ -23,6 +23,9 @@ n=zeros(size(N,1),m);
 hplus=zeros(size(N,1),1);
 hminus=zeros(size(N,1),1);
 
+h_plus_save=zeros(size(N,1),1);
+h_minus_save=zeros(size(N,1),1);
+
 d_n_dq=cell(length(active_joint),1);
 d_hplus_dq=cell(length(active_joint),1);
 d_hminus_dq=cell(length(active_joint),1);
@@ -31,7 +34,7 @@ d_hminus_dq=cell(length(active_joint),1);
 
 
 % the steepness of the sigmoid function
-sigmoid_slope=2;
+sigmoid_slope=10;
 
 
 % We start from an initial hyperplane that includes the origin and whose normal is n. The unit
@@ -39,7 +42,7 @@ sigmoid_slope=2;
 % will define the position of the faces, or how the initial hyperplane is shifted along n to coincide with the two support-
 % ing hyperplanes.
 
-
+h_tahir=[];
 
 for i = 1:size(N,1)
     v1=JE(:,N(i,1));
@@ -55,10 +58,11 @@ for i = 1:size(N,1)
     end
     
     
-    hplus(i)=0.0;
-  
+    hplus(i)=0.0;    
     hminus(i)=0.0;
     
+    h_plus_save(i)=0.0;
+    h_minus_save(i)=0.0;
     
     for j=1:(n_joints-(m-1))
         vk=JE(:,Nnot(i,j));
@@ -75,10 +79,30 @@ for i = 1:size(N,1)
         
         hplus(i) =hplus(i)  +sigmoid(ntvk*sigmoid_slope)*  deltaq(Nnot(i,j))*ntvk;
         hminus(i)=hminus(i) +sigmoid(ntvk*-sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
+        
+        
+%         % original calculation
+%         for alpha= 0:1
+%              h_tahir(alpha+1,:)=alpha* deltaq(Nnot(i,j))*ntvk;%%% $$$ check it again
+%         end
+%         h_plus_t=max(max(h_tahir));
+%         h_minus_t=min(min(h_tahir));
+%         
+%         h_plus_save(i) = h_plus_save(i)+h_plus_t;
+%         h_minus_save(i) = h_minus_save(i)+h_minus_t;
+        
+        
+        
     end
     
+    
+    
 end
-
+% h_plus_save
+% hplus
+% h_minus_save
+% hminus
+% pause()
 
 end
 

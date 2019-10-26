@@ -95,7 +95,7 @@ for q3=0:step:pi
     
      
     numerical_grad_hp=(hp-hp_last)/step;
-    numerical_grad_hm=(hp-hp_last)/step;
+    numerical_grad_hm=(hm-hm_last)/step;
     
     
     numerical_grad_gamma=(Gamma_plus-Gamma_last)/step;

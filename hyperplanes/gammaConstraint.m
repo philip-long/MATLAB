@@ -25,14 +25,14 @@ end
 
 c=[ - Gamma_plus(:)
     Gamma_minus(:)];
-c=[ - Gamma_plus(:)];
+%c=[ - Gamma_plus(:)];
 ceq=[];
 c_grad=[];
 ceq_grad=[];
 
 
  for joint=1:size(JE,2)
-     c_grad=[c_grad; -Gamma_p_gradient{joint}(:)'];%, Gamma_m_gradient{joint}(:)'];
+     c_grad=[c_grad; -Gamma_p_gradient{joint}(:)', Gamma_m_gradient{joint}(:)'];
  end
 
 end
