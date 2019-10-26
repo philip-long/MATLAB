@@ -8,7 +8,7 @@ norm_single_vector=0;
 n=zeros(3,1);
 nt_vk=zeros(3,1);
 sig_nt_vk=zeros(3,1);
-h=zeros(3,1);
+hp=zeros(3,1);
 q=-2;
 step=0.0001;
 
@@ -31,7 +31,7 @@ norm_of_cross_product_last=norm_of_cross_product;
 n_last=n;
 nt_vk_last=nt_vk;
 sig_nt_vk_last=sig_nt_vk;
-h_last=h;
+h_last=hp;
 
 % Derivate of nt Checked
 u=cross(v1,v2);
@@ -52,16 +52,22 @@ numerial_grad_ntvk=(n'*vk-nt_vk_last)/step;
 
 % GRADIENT OF SIGMOID(nt*vk) CHECKED
 sig_nt_vk=sigmoid(nt_vk,200);
-dsig_nt_vk_dq=sigmoidGradient(nt_vk,200)*dntvk_dq;
+dsig_nt_vk_dq=sigmoidGradient(nt_vk,-200)*dntvk_dq;
 numerial_grad_sig_nt_vk=(sig_nt_vk-sig_nt_vk_last)/step;
 
-h=sigmoid(nt_vk,200)*deltaq*nt_vk;
+hp=sigmoid(nt_vk,-200)*deltaq*nt_vk;
+hm=sigmoid(nt_vk,-200)*deltaq*nt_vk;
+
 % Gradient of H CHECKED
-dhdq=(numerial_grad_sig_nt_vk*deltaq*nt_vk) + sigmoid(nt_vk,200)*deltaq*dntvk_dq;
-numerical_gradient_h=(h-h_last)/step;
+dhdq=(dsig_nt_vk_dq*deltaq*nt_vk) + sigmoid(nt_vk,-200)*deltaq*dntvk_dq;
+numerical_gradient_h=(hp-h_last)/step;
+numerical_gradient_h=(hp-h_last)/step;
+
 % if(dsig_nt_vk_dq>0.001)
 % pause()
 % end
     E=[E;norm(numerical_gradient_h-dhdq)];
 end
 plot(E(2:end))
+figure(2)
+plot(Em(2:end))

@@ -68,12 +68,13 @@ for i = 1:size(N,1)
         for joint=active_joint
         d_vk_dq{joint}=HE{joint}(1:3,Nnot(i,j));
         d_ntvk_dq{joint}=(d_n_dq{joint}(i,:)*vk) +n(i,:)*d_vk_dq{joint};
-        d_hplus_dq{joint}(i)=d_hplus_dq{joint}(i)+(sigmoidGradient(ntvk,sigmoid_slope)*d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq{joint};
-        d_hminus_dq{joint}(i)=d_hminus_dq{joint}(i)+(sigmoidGradient(-ntvk,sigmoid_slope)*d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(-ntvk,sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq{joint};
+        d_hplus_dq{joint}(i)=  d_hplus_dq{joint}(i)+ (sigmoidGradient(ntvk,sigmoid_slope) *d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,sigmoid_slope) *deltaq(Nnot(i,j))*d_ntvk_dq{joint};
+        %d_hminus_dq{joint}(i)= d_hminus_dq{joint}(i)+(sigmoidGradient(ntvk,-sigmoid_slope)*d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,-sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq{joint};        
+        d_hminus_dq{joint}(i)= d_hminus_dq{joint}(i)+(sigmoidGradient(ntvk,-sigmoid_slope)*d_ntvk_dq{joint}*deltaq(Nnot(i,j))*ntvk) + sigmoid(ntvk,-sigmoid_slope)*deltaq(Nnot(i,j))*d_ntvk_dq{joint};
         end
         
-        hplus(i)=hplus(i)+sigmoid(ntvk*sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
-        hminus(i)=hminus(i)+sigmoid(-ntvk*sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
+        hplus(i) =hplus(i)  +sigmoid(ntvk*sigmoid_slope)*  deltaq(Nnot(i,j))*ntvk;
+        hminus(i)=hminus(i) +sigmoid(ntvk*-sigmoid_slope)* deltaq(Nnot(i,j))*ntvk;
     end
     
 end

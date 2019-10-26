@@ -20,11 +20,16 @@ G=[]
 qpos=randRange(-pi,pi,7);
 joint=randi(4);
 
-step=0.001
+step=0.005
 
 
 Gamma_plus=zeros(3,1);
 Gamma_minus=zeros(3,1);
+
+
+hp=zeros(3,1);
+hm=zeros(3,1);
+
 qdot_max=ones(length(active_joint),1)*qdot_arm_max;
 qdot_min=ones(length(active_joint),1)*qdot_arm_min;
 deltaq=qdot_max-qdot_min;
@@ -45,6 +50,10 @@ for q3=0:step:pi
     % Checking the numerical gradient
     Gamma_last=Gamma_plus;
     Gamma_last_m=Gamma_minus;
+    
+    
+    hp_last=hp;    
+    hm_last=hm;
     %
     
     qpos(joint)=q3;
@@ -84,14 +93,22 @@ for q3=0:step:pi
         end
     end
     
+     
+    numerical_grad_hp=(hp-hp_last)/step;
+    numerical_grad_hm=(hp-hp_last)/step;
+    
     
     numerical_grad_gamma=(Gamma_plus-Gamma_last)/step;
     numerical_grad_gamma_m=(Gamma_minus-Gamma_last_m)/step;
     
        Gamma_p_gradient{joint};
     Gamma_m_gradient{joint};
-    E=[E;norm(numerical_grad_gamma-    Gamma_p_gradient{joint})];
-    Em=[Em;norm(numerical_grad_gamma_m-    Gamma_m_gradient{joint})];
+  %  E=[E;norm(numerical_grad_gamma-    Gamma_p_gradient{joint})];
+  %  Em=[Em;norm(numerical_grad_gamma_m-    Gamma_m_gradient{joint})];
+    
+    E=[E;norm(numerical_grad_hp-hp_grad{joint})];
+    Em=[Em;norm(numerical_grad_hm-hm_grad{joint})];
+    
     
     %     numerical_grad_gamma_sum=(sum(sum(Gamma_plus))-sum(sum(Gamma_last)))/step
     %     sum(sum(Gamma_p_gradient{joint}))
