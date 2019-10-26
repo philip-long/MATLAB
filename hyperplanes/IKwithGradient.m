@@ -35,28 +35,38 @@ q0=rand(7,1);
 %% Trying Gamma as a constraint
 
 
-fmincon_options= optimoptions('fmincon','Algorithm','sqp','CheckGradients',true,'SpecifyConstraintGradient',true);
+fmincon_options= optimoptions('fmincon','Algorithm','sqp','SpecifyConstraintGradient',true);%,'CheckGradient',true);
 nonlcon=@gammaConstraint
+nonlcon_nograd=@gammaConstraintNoGrad
 %nonlcon2=@manipConstraint
 fun = @(q)norm(pos70(q)-pos_des)*1000;
 error0=fun(q0)
 
 ub=[]
 lb=[]
- [q,fval,out] = fmincon(fun,q0,[],[],[],[],lb,ub,... 
+tic
+ [q,fval_g,out_g] = fmincon(fun,q0,[],[],[],[],lb,ub,... 
     @(q)nonlcon(q,qdot_max,qdot_min,desired_twist.V),fmincon_options)
-
-%  [q,fval] = fmincon(fun,q0,[],[],[],[],lb,ub,... 
-%     @(q)nonlcon2(q,qdot_max,qdot_min,desired_twist.V),fmincon_options);
-
-plotPolyForJointValue(q,qdot_arm_max,qdot_arm_min,'r');
-plotPolyForJointValue(q0,qdot_arm_max,qdot_arm_min,'g');
+g_time=toc
 
 
-
-
+vol_sol_gradient=plotPolyForJointValue(q,qdot_arm_max,qdot_arm_min,'r');
+vol=plotPolyForJointValue(q0,qdot_arm_max,qdot_arm_min,'g');
 hold on
 desired_twist.plot('color','b')
+title('Using Gradient')
+
+fmincon_options= optimoptions('fmincon','Algorithm','sqp');
+tic
+ [q,fval_ng,out_ng] = fmincon(fun,q0,[],[],[],[],lb,ub,... 
+    @(q)nonlcon_nograd(q,qdot_max,qdot_min,desired_twist.V),fmincon_options)
+ng_time=toc
+figure(2)
+vol_sol_no_gradient=plotPolyForJointValue(q,qdot_arm_max,qdot_arm_min,'r');
+plotPolyForJointValue(q0,qdot_arm_max,qdot_arm_min,'g');
+hold on
+desired_twist.plot('color','b')
+title('No Gradient ')
 
 %[q,fval] = fmincon(fun,q0,[],[],[],[],lb,ub,... 
 %   @(q)nonlcon(q),fmincon_options);
