@@ -9,8 +9,9 @@ m=size(JE,1); % Number of degrees of freedom
 
 if(nargin<4)
     active_joint=1:n_joints;
+else
+    n_joints=length(active_joint);
 end
-
 
 % Return combination of selected joints and selected joints
 
@@ -34,7 +35,7 @@ d_hminus_dq=cell(length(active_joint),1);
 
 
 % the steepness of the sigmoid function
-sigmoid_slope=10;
+sigmoid_slope=200;
 
 
 % We start from an initial hyperplane that includes the origin and whose normal is n. The unit
@@ -42,7 +43,6 @@ sigmoid_slope=10;
 % will define the position of the faces, or how the initial hyperplane is shifted along n to coincide with the two support-
 % ing hyperplanes.
 
-h_tahir=[];
 
 for i = 1:size(N,1)
     v1=JE(:,N(i,1));
@@ -65,6 +65,7 @@ for i = 1:size(N,1)
     h_minus_save(i)=0.0;
     
     for j=1:(n_joints-(m-1))
+
         vk=JE(:,Nnot(i,j));
        
         ntvk=vk'*n(i,:)';
