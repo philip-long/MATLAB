@@ -56,7 +56,7 @@ f='k';
 % Copyright (c)2003, Lei Wang <WangLeiBox@hotmail.com>
 %$Revision: 1.0 $  $ 4/1/2003 5:42:24 PM $
 
-    lineStyle = 'b-';
+    lineStyle = 'k-';
 
 
 
@@ -79,7 +79,7 @@ theta = [-0.03:0.01:2*pi];
 
 % Plot the ellipse
 %----------------------------------------
- hEllipse = plot(X,Y,lineStyle);
+ hEllipse = plot(X,Y,lineStyle,'LineWidth',1.0);
  axis equal;
  fill(X,Y,face_color,'facealpha',shading)
  

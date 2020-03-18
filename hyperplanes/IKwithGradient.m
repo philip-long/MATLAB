@@ -35,11 +35,11 @@ q0=rand(7,1);
 %% Trying Gamma as a constraint
 
 
-fmincon_options= optimoptions('fmincon','Algorithm','sqp','SpecifyConstraintGradient',true);%,'CheckGradient',true);
+fmincon_options= optimoptions('fmincon','Algorithm','sqp','SpecifyConstraintGradient',true,'CheckGradient',true,'Plotfcn','optimplotfval');
 nonlcon=@gammaConstraint
 nonlcon_nograd=@gammaConstraintNoGrad
 %nonlcon2=@manipConstraint
-fun = @(q)norm(pos70(q)-pos_des)*1000;
+fun = @(q)norm(pos70(q)-pos_des)*10000;
 error0=fun(q0)
 
 ub=[]
@@ -56,7 +56,7 @@ hold on
 desired_twist.plot('color','b')
 title('Using Gradient')
 
-fmincon_options= optimoptions('fmincon','Algorithm','sqp');
+fmincon_options= optimoptions('fmincon','Algorithm','sqp','Plotfcn','optimplotfval');
 tic
  [q,fval_ng,out_ng] = fmincon(fun,q0,[],[],[],[],lb,ub,... 
     @(q)nonlcon_nograd(q,qdot_max,qdot_min,desired_twist.V),fmincon_options)
