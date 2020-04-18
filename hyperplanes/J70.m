@@ -1,7 +1,11 @@
 function J=J70(q)
+%J70 Compute Jacobian functoon
+%   J=J70(q)computes the 6x7 Jaocbian matrix of the end effector
+
+
 
 TnE=eye(4);
-TnE(3,4)=0.15;
+TnE(3,4)=0.15; % end effector offset
 T=T70(q);
 T0E=T*TnE;
 P=TnE(1:3,4);

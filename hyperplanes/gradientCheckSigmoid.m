@@ -1,4 +1,5 @@
 % Gradient of a sigmoid function check
+
 clear all, clc,close all;
 clear all,clc,close all
 addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))

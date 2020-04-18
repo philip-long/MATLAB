@@ -1,4 +1,4 @@
-% Attempt 1 to get analytical gradient
+% Attempt 1 to get analytical gradient with robot example
 
 clear all,clc,close all
 addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
@@ -16,14 +16,14 @@ active_joint=1:4; % Only considering 4 joint for illustrative case
 sigmoid_slope=200;
 
 %%
-G=[]
+G=[];
 qpos=randRange(-pi,pi,7);
 joint=randi(4);
 
 
 n=zeros(6,3);
  hplus=zeros(6,1);
-step=0.01
+step=0.01;
 Gamma_i=0.0;
 
 

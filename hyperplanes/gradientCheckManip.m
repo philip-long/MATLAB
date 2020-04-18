@@ -1,4 +1,4 @@
-% Attempt 1 to get analytical gradient
+% Check all gradients with robot example
 
 clear all,clc,close all
 addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
@@ -101,13 +101,13 @@ for q3=0:step:pi
     numerical_grad_gamma=(Gamma_plus-Gamma_last)/step;
     numerical_grad_gamma_m=(Gamma_minus-Gamma_last_m)/step;
     
-       Gamma_p_gradient{joint};
+    Gamma_p_gradient{joint};
     Gamma_m_gradient{joint};
-  %  E=[E;norm(numerical_grad_gamma-    Gamma_p_gradient{joint})];
-  %  Em=[Em;norm(numerical_grad_gamma_m-    Gamma_m_gradient{joint})];
+    E=[E;norm(numerical_grad_gamma-    Gamma_p_gradient{joint})];
+    Em=[Em;norm(numerical_grad_gamma_m-    Gamma_m_gradient{joint})];
     
-    E=[E;norm(numerical_grad_hp-hp_grad{joint})];
-    Em=[Em;norm(numerical_grad_hm-hm_grad{joint})];
+  %  E=[E;norm(numerical_grad_hp-hp_grad{joint})];
+   % Em=[Em;norm(numerical_grad_hm-hm_grad{joint})];
     
     
     %     numerical_grad_gamma_sum=(sum(sum(Gamma_plus))-sum(sum(Gamma_last)))/step

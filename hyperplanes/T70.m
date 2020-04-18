@@ -1,4 +1,8 @@
+
 function T=T70(q)
+%T70 Compute Transformation matrix
+%   T = T70(q) computes the 4x4 homogenous transform of the end effector
+
 
 right_j0=q(1);
 right_j1=q(2);

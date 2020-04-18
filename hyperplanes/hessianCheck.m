@@ -1,10 +1,12 @@
 % http://www.orocos.org/node/829
+% This script checks that the numerical gradient of the jaobican matches
+% the Hessian matrix
 % I have checked the hessian symbolically and this is working!! :0
 % Need to tidy this code up and functionalize it
 clear all,clc,close all
 load('Hessian_mats')
 addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
-addpath(genpath('~/tbxmanager'))
+% addpath(genpath('~/tbxmanager'))
 
 qdot_arm_max=2;
 qdot_arm_min=-4;

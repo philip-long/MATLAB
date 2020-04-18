@@ -1,4 +1,7 @@
 function P=pos70(q)
+%pos70 Compute sigmoid functoon
+%   J = pos70(q) computes the position of the end effector
+
 
 right_j0=q(1);
 right_j1=q(2);
