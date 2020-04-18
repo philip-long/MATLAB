@@ -1,7 +1,7 @@
 %% Solving the inverse kinematic model using the gradient of GAMMA
 
 clear all,clc,close all
-addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
+%addpath(genpath('/media/philip/39C2CB4B4DF25122/MatlabFunctions/MATLAB/robot-functions'))
 addpath(genpath('~/tbxmanager')) % https://www.tbxmanager.com/#
 
 qdot_arm_max=2;
@@ -59,6 +59,7 @@ title('Using Gradient')
 legend('Opt solution','Desired','Initial solution')
 
 pause()
+disp 'press space to continue'
 % Inverse Kinematic Model with Gamma as a constraint without using gradient
 figure(3)
 fmincon_options= optimoptions('fmincon','Algorithm','sqp','Plotfcn','optimplotfval');
